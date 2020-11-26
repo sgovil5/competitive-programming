@@ -45,7 +45,5 @@ int main(){
       break;
     }
   }
-  for(int i=0; i<n; i++){
-    fout<<arr[i]<<endl;
-  }
+  for(int i=0; i<n; i++) fout<<arr[i]<<endl;
 }
