@@ -11,9 +11,7 @@ int main(){
   for(int i=1; i<=n; i++){
     int x;
     fin>>x;
-    p1[i]=p1[i-1];
-    p2[i]=p2[i-1];
-    p3[i]=p3[i-1];
+    p1[i]=p1[i-1],p2[i]=p2[i-1],p3[i]=p3[i-1];
     if(x==1) p1[i]++;
     else if(x==2) p2[i]++;
     else p3[i]++;
