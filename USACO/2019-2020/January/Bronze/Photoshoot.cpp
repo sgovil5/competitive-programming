@@ -1,41 +1,34 @@
-#include <fstream>
+#include <bits/stdc++.h>
 using namespace std;
 ifstream fin("photo.in");
 ofstream fout("photo.out");
 
-int main() {
+int main(){
   int n;
   fin>>n;
   int arr[n-1];
-  for(int i=0; i<n-1;i++)
-    fin>>arr[i];
-  int ans[n];
-  bool completed =false;
-  for(int start=1; n; start++){
-    int x =start;
-    ans[0] = start;
-    bool visited[1000]={false};
-    for(int i=0; i<n-1;i++){
-      int out = arr[i]-x;
-      if(visited[out]==true||out<=0||out>1000)
-      {
-        break;
-      }
-      else if(i==n-2&&visited[out]==false)
-      {
-       completed=true;
-       ans[i+1]=out;
-       break;
-      }
+  for(int i=0; i<n-1; i++) fin>>arr[i];
+  bool done = false;
+  for(int start=1; start<=n; start++){
+    set<int> numSet;
+    vector<int> numVect;
+    numSet.insert(start);
+    numVect.push_back(start);
+    for(int i=0; i<n-1; i++){
+      int num = arr[i] - numVect[i];
+      if(num<=0) break;
       else{
-        visited[out] = true;
-        ans[i+1]=out;
-        x=out;
+        numSet.insert(num);
+        numVect.push_back(num);
       }
     }
-    if(completed==true) break;
+    if(numSet.size()==n){
+      done = true;
+      for(int i=0; i<n-1; i++){
+        fout<<numVect[i]<<" ";
+      }
+      fout<<numVect[n-1];
+    }
+    if(done) break;
   }
-  fout<<ans[0];
-  for(int i=1; i<n; i++)
-    fout<<" "<<ans[i];
 }
