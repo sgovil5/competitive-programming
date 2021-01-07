@@ -1,14 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-struct Customer{
-  int l,r;
-};
-
-bool cmp (const Customer& a, const Customer& b) {
-  return a.l < b.l;
-}
-
 int n;
 map<int, bool> m; //true for enter, false for exit
 
