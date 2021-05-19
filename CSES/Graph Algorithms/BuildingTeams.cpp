@@ -1,39 +1,50 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
 using namespace std;
 
+#define pb push_back
+
+const int MX = 1e5+5;
 int n,m;
-vector<int> adj[100004];
-bool visited[100004]={false};
-int team[100004]={0};
-bool isPossible = true;
+vector<int> adj[MX];
+bool vis[MX] = {false};
+int team[MX] = {0};
+bool possible = true;
 
 void dfs(int node, int prev){
-  if(prev==1) team[node] = 2;
+  vis[node] = true;
+  if(team[prev]==1) team[node] = 2;
   else team[node] = 1;
-  visited[node] = true;
+
   for(auto u: adj[node]){
-    if(!visited[u]) dfs(u, team[node]);
-    else if(visited[u]){
-      if(team[node]==prev) isPossible = false;
+    if(vis[u]){
+      if(team[node]==team[u]) possible = false;
+    }
+    else{
+      dfs(u, node);
     }
   }
 }
 
-int main() {
-  cin>>n>>m;
+int main(){
+  cin>>n>>m; 
   for(int i=0; i<m; i++){
-    int a,b;
-    cin>>a>>b;
-    adj[a].push_back(b);
-    adj[b].push_back(a);
+    int a,b; cin>>a>>b;
+    adj[a].pb(b);
+    adj[b].pb(a);
   }
+
+  team[0] = 0;
   for(int i=1; i<=n; i++){
-    if(!visited[i]) dfs(i,1);
+    if(!vis[i]) dfs(i,0);
   }
-  if(isPossible){
+
+  if(!possible) cout<<"IMPOSSIBLE";
+  else{
     for(int i=1; i<=n; i++){
       cout<<team[i]<<" ";
     }
-  }
-  else cout<<"IMPOSSIBLE"<<endl;
+  } 
+  
+  return 0;
 }
