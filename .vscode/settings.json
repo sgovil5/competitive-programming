@@ -4,6 +4,8 @@
         "algorithm": "cpp",
         "xtree": "cpp",
         "iostream": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "xutility": "cpp",
+        "set": "cpp"
     }
 }
