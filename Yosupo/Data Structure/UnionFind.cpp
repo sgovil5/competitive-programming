@@ -1,43 +1,33 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
 using namespace std;
 
-const int MXN = 2e5+5;
-int n,q;
-int sz[MXN], link[MXN];
-
-struct DSU{
-  void init(int sz[], int link[]){
-    for (int i = 1; i <= n; i++) link[i] = i;
-    for (int i = 1; i <= n; i++) sz[i] = 1;
-  }
-  int find(int x) {
-    while (x != link[x]) x = link[x];
-    return x;
-  }
-  bool same(int a, int b) {
-    return find(a) == find(b);
-  }
-  void unite(int a, int b, int sz[], int link[]) {
-    a = find(a);
-    b = find(b);
-    if (sz[a] < sz[b]) swap(a,b);
-    sz[a] += sz[b];
-    link[b] = a;
-  }
+struct DSU {
+	vector<int> e; void init(int N) { e = vector<int>(N,-1); }
+	// get representive component, uses path compression
+	int get(int x) { return e[x] < 0 ? x : e[x] = get(e[x]); }
+	bool sameSet(int a, int b) { return get(a) == get(b); }
+	int size(int x) { return -e[get(x)]; }
+	bool unite(int x, int y) { // union by size
+		x = get(x), y = get(y); if (x == y) return 0;
+		if (e[x] > e[y]) swap(x,y);
+		e[x] += e[y]; e[y] = x; return 1;
+	}
 };
 
-int main() {
+DSU dsu;
+int n,q;
+int main(){
   cin>>n>>q;
-  DSU dsu;
-  dsu.init(sz, link);
+  dsu.init(n);
   for(int i=0; i<q; i++){
-    int t, u,v;
-    cin>>t>>u>>v;
-    if(t==0){
-      dsu.unite(u, v, sz, link);
+    int x,u,v; cin>>x>>u>>v;
+    if(x==0){
+      dsu.unite(u,v);
     }
     else{
-      cout<<(dsu.same(u, v) ? 1 : 0)<<endl;
+      if(dsu.sameSet(u,v)) cout<<1<<endl;
+      else cout<<0<<endl;
     }
   }
 }
