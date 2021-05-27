@@ -8,6 +8,8 @@
         "xutility": "cpp",
         "set": "cpp",
         "xstring": "cpp",
-        "xiosbase": "cpp"
+        "xiosbase": "cpp",
+        "queue": "cpp",
+        "utility": "cpp"
     }
 }
