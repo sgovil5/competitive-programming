@@ -10,6 +10,7 @@
         "xstring": "cpp",
         "xiosbase": "cpp",
         "queue": "cpp",
-        "utility": "cpp"
+        "utility": "cpp",
+        "xstddef": "cpp"
     }
 }
