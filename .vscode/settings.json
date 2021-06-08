@@ -11,6 +11,7 @@
         "xiosbase": "cpp",
         "queue": "cpp",
         "utility": "cpp",
-        "xstddef": "cpp"
+        "xstddef": "cpp",
+        "stack": "cpp"
     }
 }
