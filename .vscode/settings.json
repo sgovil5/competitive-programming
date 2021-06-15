@@ -12,6 +12,11 @@
         "queue": "cpp",
         "utility": "cpp",
         "xstddef": "cpp",
-        "stack": "cpp"
-    }
+        "stack": "cpp",
+        "cmath": "cpp"
+    },
+    "cSpell.ignoreWords": [
+        "pslopes",
+        "qslopes"
+    ]
 }
