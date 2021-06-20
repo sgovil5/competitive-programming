@@ -1,27 +1,38 @@
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
-ifstream fin("moobuzz.in");
-ofstream fout("moobuzz.out");
-
 using ll = long long;
 
-ll n;
+int n;
 
-bool check(ll num){
-  ll place = (num/3) + (num/5) - (num/15);
-  return ((num-place)>=n);
+void setIO(string fileName = "") {
+	//ios_base::sync_with_stdio(0); cin.tie(0);
+	if((int)fileName.size()) {
+		freopen((fileName+".in").c_str(), "r", stdin);
+		freopen((fileName+".out").c_str(), "w", stdout);
+	}
 }
 
-ll fstTrue(ll lo, ll hi) {
-  for (hi ++; lo < hi; ) {
-    ll mid = (lo+hi)/2;
-    check(mid) ? hi = mid : lo = mid+1;
-  }
-  return lo;
+bool check(ll c){
+  ll numMoo = 0;
+  numMoo+=(c-1)/3;
+  numMoo+=(c-1)/5;
+  numMoo-=(c-1)/15;
+  return c-numMoo<=n;
 }
+
+int lastTrue(ll lo, ll hi) {
+	for (--lo; lo < hi; ) {
+		ll mid = lo+(hi-lo+1)/2;
+		if (check(mid)) lo = mid;
+		else hi = mid-1;
+	}
+	return lo;
+}
+
 
 int main(){
-  fin>>n;
-  ll hi = 1e18;
-  fout<<fstTrue(1, hi);
+  setIO("moobuzz");
+  cin>>n;
+  ll ans = lastTrue(1, 2e9);
+  cout<<ans<<endl;
 }
