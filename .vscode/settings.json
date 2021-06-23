@@ -13,7 +13,8 @@
         "utility": "cpp",
         "xstddef": "cpp",
         "stack": "cpp",
-        "cmath": "cpp"
+        "cmath": "cpp",
+        "cstdlib": "cpp"
     },
     "cSpell.ignoreWords": [
         "pslopes",
