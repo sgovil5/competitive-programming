@@ -1,32 +1,34 @@
 #include <iostream>
-#include <set>
 #include <map>
+#include <set>
 #include <string>
 #include <algorithm>
 using namespace std;
 
-int n;
+int n, ans;
 string s;
-set<char> letters;
+set<char> chars;
+map<char, int> vis;
 
 int main(){
     cin>>n>>s;
-    for(int i=0; i<n; i++) letters.insert(s[i]);
+    for(char c: s) chars.insert(c);
+    
+    ans = n;
+    for(int i=0, j=0; i<n; i++){
+        while(j<n && vis.size()<chars.size()){
+            vis[s[j]]++;
+            j++;
+        }
 
-    int len[1000001]={0};
-    for(auto c: letters){
-        int last = -1;
-        for(int i=0; i<n; i++){
-            if(s[i]==c) last = i;
-            if(last!=-1) len[i] = max(len[i], i-last+1); 
-            else len[i] = (int) 1e9; 
+        if(vis.size()==chars.size()){
+            ans = min(ans, j-i);
+        }
+
+        if(--vis[s[i]]==0){
+            vis.erase(s[i]);
         }
     }
 
-    int ans = 1e9;
-    for(int i=0; i<n; i++){
-        ans = min(ans, len[i]);
-    }
-
-    cout<<ans;
+    cout<<ans<<endl;
 }
