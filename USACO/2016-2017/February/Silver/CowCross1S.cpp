@@ -15,9 +15,13 @@ void setIO(string fileName = "") {
 #define f first
 #define s second
 
-int c,n;
-vector<pair<int,int>> cows;
+int c, n;
 multiset<int> chickens;
+vector<pair<int,int>> cows;
+
+bool cmp(pair<int, int>& a, pair<int, int>& b){
+    return a.s<b.s;
+}
 
 int main(){
     setIO("helpcross");
@@ -28,17 +32,18 @@ int main(){
     }
     for(int i=0; i<n; i++){
         int a,b; cin>>a>>b;
-        cows.push_back({b,a});
+        cows.push_back({a,b});
     }
-    sort(begin(cows), end(cows));
+    sort(begin(cows), end(cows), cmp);
 
-    int count = 0;
+    int ans = 0;
     for(int i=0; i<n; i++){
-        auto it = chickens.lower_bound(cows[i].s);
-        if(it!=chickens.end() &&*it<=cows[i].f){
-            count++;
-            chickens.erase(it);
+        int a=cows[i].f, b=cows[i].s;
+        if(chickens.lower_bound(a)!=chickens.end() && *chickens.lower_bound(a)<=b){
+            ans++;
+            chickens.erase(chickens.lower_bound(a));
         }
     }
-    cout<<count<<endl;
+
+    cout<<ans;
 }
