@@ -1,24 +1,21 @@
 {
-    "files.associations": {
-        "vector": "cpp",
-        "algorithm": "cpp",
-        "xtree": "cpp",
-        "iostream": "cpp",
-        "ostream": "cpp",
-        "xutility": "cpp",
-        "set": "cpp",
-        "xstring": "cpp",
-        "xiosbase": "cpp",
-        "queue": "cpp",
-        "utility": "cpp",
-        "xstddef": "cpp",
-        "stack": "cpp",
-        "cmath": "cpp",
-        "cstdlib": "cpp"
-    },
-    "cSpell.ignoreWords": [
-        "pslopes",
-        "psum",
-        "qslopes"
-    ]
+  "files.associations": {
+    "vector": "cpp",
+    "algorithm": "cpp",
+    "xtree": "cpp",
+    "iostream": "cpp",
+    "ostream": "cpp",
+    "xutility": "cpp",
+    "set": "cpp",
+    "xstring": "cpp",
+    "xiosbase": "cpp",
+    "queue": "cpp",
+    "utility": "cpp",
+    "xstddef": "cpp",
+    "stack": "cpp",
+    "cmath": "cpp",
+    "cstdlib": "cpp",
+    "istream": "cpp"
+  },
+  "cSpell.ignoreWords": ["pslopes", "psum", "qslopes"]
 }
