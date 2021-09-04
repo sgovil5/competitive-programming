@@ -1,45 +1,40 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <algorithm>
+#include <vector>
 using namespace std;
-ifstream fin("reststops.in");
-ofstream fout("reststops.out");
 
-using ll = long long;
+#define f first
+#define s second
 
-int main() {
-  //Input
-  ll l, n, rf, rb;
-  fin>>l>>n>>rf>>rb;
+void setIO(string fileName = "") {
+	ios_base::sync_with_stdio(0); cin.tie(0);
+	if((int)fileName.size()) {
+		freopen((fileName+".in").c_str(), "r", stdin);
+		freopen((fileName+".out").c_str(), "w", stdout);
+	}
+}
 
-  //Create stops and sort
-  vector<pair<ll,ll>> stops;
+int l, n, rf, rb;
+vector<pair<long long,long long>> v; //tastiness, position
+
+int main(){
+  setIO("reststops");
+  cin>>l>>n>>rf>>rb;
   for(int i=0; i<n; i++){
-    ll x,c;
-    fin>>x>>c;
-    stops.push_back({x,c});
+    long long p, t; cin>>p>>t;
+    v.push_back({t, p});
   }
-  sort(begin(stops), end(stops));
-  
-  // Calculate max utility for stops from right to left
-  ll maxStops[n];
-  maxStops[n-1] = n-1;
-  for(ll i=n-2; i>=0; --i){
-    if(stops[i].second > stops[maxStops[i+1]].second){
-      maxStops[i] = i;
-    }
-    else maxStops[i] = maxStops[i+1];
-  }
+  sort(begin(v), end(v));
 
-  ll bessieRestTime = 0;
-  ll utility = 0;
-  for(ll i=0; i<n; i++){
-    if(i==maxStops[i]){
-      ll bessieArrive = ((stops[i].first) * rb) + bessieRestTime;
-      ll farmerArrive = ((stops[i].first) * rf);
-      ll disparity = farmerArrive - bessieArrive;
-      utility+=(stops[i].second * disparity);
-      bessieRestTime+=disparity;
+  long long score = 0;
+  long long mxPos=0,currTime=0;
+  for(int i=n-1; i>=0; i--){
+    if(v[i].s>mxPos){
+      currTime+=(v[i].s-mxPos)*rb;
+      score+=((rf*v[i].s)-currTime)*v[i].f;
+      currTime = rf*v[i].s;
+      mxPos = v[i].s;
     }
   }
-
-  fout<<utility;
+  cout<<score<<endl;
 }
