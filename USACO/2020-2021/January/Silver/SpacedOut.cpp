@@ -1,39 +1,56 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include <algorithm>
 using namespace std;
 
-int main() {
-  int n;
+int n;
+int grid[1005][1005];
+
+int main(){
   cin>>n;
-  int grid[n][n];
   for(int i=0; i<n; i++){
     for(int j=0; j<n; j++){
       cin>>grid[i][j];
     }
   }
 
-  // Calculate horizontal
-  int horizontal = 0;
+  int sumHor = 0;
+
+  // loop through every column
   for(int i=0; i<n; i++){
-    int even = 0, odd = 0;
+    // start from the first index
+    int sum1 = 0;
     for(int j=0; j<n; j+=2){
-      even+=grid[i][j];
+      sum1+=grid[i][j];
     }
+
+    //start from the next index
+    int sum2 = 0;
     for(int j=1; j<n; j+=2){
-      odd+=grid[i][j];
+      sum2+=grid[i][j];
     }
-    horizontal+=max(odd, even);
+
+    sumHor+=max(sum1, sum2);
   }
-  //Calculate vertical
-  int vertical = 0;
+
+  int sumVer = 0;
+
+  // loop through every column
   for(int i=0; i<n; i++){
-    int even = 0, odd = 0;
+    // start from the first index
+    int sum1 = 0;
     for(int j=0; j<n; j+=2){
-      even+=grid[j][i];
+      sum1+=grid[j][i];
     }
+
+    //start from the next index
+    int sum2 = 0;
     for(int j=1; j<n; j+=2){
-      odd+=grid[j][i];
+      sum2+=grid[j][i];
     }
-    vertical+=max(odd, even);
+
+    sumVer+=max(sum1, sum2);
   }
-  cout<<max(vertical, horizontal);
+
+  cout<<max(sumVer, sumHor);
 }
