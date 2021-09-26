@@ -1,60 +1,71 @@
 #include <iostream>
-#include <vector>
 #include <algorithm>
+#include <vector>
 using namespace std;
 
-const int MXN = 1e5+5;
+#define f first
+#define s second
 
-int N, D, M;
-vector<pair<int,int>> jobs; // day, index
-vector<int> ans[MXN];
+const int MX = 1e5+5;
+
+int n, d, m;
+vector<pair<int,int>> v;
 
 bool check(int machines){
-    // Filled[i] represents how many tasks are processed on day i
-    vector<int> filled(MXN, 0);
-    int currDay = 0;
-    for(int i=0; i<M; i++){
-        currDay = max(currDay, jobs[i].first);
-        if(filled[currDay]>=machines) currDay++; 
-        if(currDay>jobs[i].first+D) return false;
+    int currDay = v[0].f;
+    vector<int> filled(MX, 0);
+
+    for(int i=0; i<m; i++){
+        currDay = max(currDay, v[i].f);
+        if(filled[currDay]>=machines) currDay++;
+        if(currDay-d>v[i].f) return false;
         filled[currDay]++;
     }
+
     return true;
 }
 
 int firstTrue(int lo, int hi) {
-	for (hi ++; lo < hi; ) {
-		int mid = lo+(hi-lo)/2;
-		if (check(mid)) hi = mid;
-		else lo = mid+1;
+	hi++;
+	while (lo < hi) {
+		int mid = lo + (hi - lo) / 2;
+		if (check(mid)) {
+			hi = mid;
+		} else {
+			lo = mid + 1;
+		}
 	}
 	return lo;
 }
 
 int main(){
-    cin>>N>>D>>M;
-    for(int i=0; i<M; i++){
+    cin>>n>>d>>m;
+    for(int i=0; i<m; i++){
         int x; cin>>x;
-        jobs.push_back({x, i+1});
+        v.push_back({x, i});
     }
-    sort(jobs.begin(), jobs.end());
+    sort(begin(v), end(v));
 
-    int numMachines = firstTrue(0, MXN); 
+    int req = firstTrue(1, MX);
 
-    cout<<numMachines<<endl;
-    
+    cout<<req<<endl;
+
+    vector<int> ans[MX];
+
     int currDay = 0;
-    for(int i=0; i<M; i++){
-        currDay = max(currDay, jobs[i].first);
-        if(ans[currDay].size()>=numMachines) currDay++;
-        ans[currDay].push_back(jobs[i].second);
+    for(int i=0; i<m; i++){
+        currDay = max(currDay, v[i].f);
+        int sz = ans[currDay].size();
+        if(sz>=req){
+            currDay++;
+        }
+        ans[currDay].push_back(v[i].s);
     }
 
-    for(int i=1; i<=N; i++){
-        for(int j=0; j<ans[i].size(); j++){
-            cout<<ans[i][j]<<" ";
+    for(int i=1; i<=n; i++){
+        for(int val: ans[i]){
+            cout<<val+1<<" ";
         }
         cout<<0<<endl;
     }
-    return 0;
 }
