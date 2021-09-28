@@ -1,50 +1,49 @@
 #include <iostream>
-#include <algorithm>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
-using ll = long long;
-
 struct Friend{
-    ll h,w,i; //height, width, index
+  int h, w, i;
 };
 
 bool cmp(Friend& a, Friend& b){
     if(a.h==b.h) return a.w>b.w;
-    else return a.h<b.h;
+    return a.h<b.h;
 }
+
+int t;
 
 void solve(){
     int n; cin>>n;
-    vector<Friend> friends; 
-
+    vector<Friend> v;
     for(int i=0; i<n; i++){
-        int height,width; cin>>height>>width;
-        if(height<width) swap(height,width);
-        friends.push_back({height,width,i});
+        int height, weight; cin>>height>>weight;
+        if(weight > height) swap(height, weight);
+        v.push_back({height, weight, i+1});
     }
-    sort(begin(friends), end(friends), cmp);
+    sort(begin(v), end(v), cmp);
 
-    vector<int> ans(n, -1);
-
-    int currI = friends[0].i, currW = friends[0].w;
-    for(int i=1; i<n; i++){
-        if(friends[i].w>currW){
-            ans[friends[i].i] = currI+1;
+    vector<int> overlap(n+1, -1);
+    int currI = v[0].i, currW = v[0].w;
+    
+    for(int j=1; j<n; j++){
+        if(v[j].w > currW){
+            overlap[v[j].i] = currI;
         }
         else{
-            currI = friends[i].i; 
-            currW = friends[i].w;
+            currI = v[j].i;
+            currW = v[j].w;
         }
     }
 
-    for(int i=0; i<n; i++) cout<<ans[i]<<" ";
+    for(int i=1; i<=n; i++) cout<<overlap[i]<<" ";
     cout<<endl;
 }
 
 int main(){
-    int t; cin>>t;
-    for(int i=0; i<t; i++){
+    cin>>t;
+    while(t--){
         solve();
     }
 }
