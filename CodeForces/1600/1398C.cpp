@@ -1,38 +1,31 @@
 #include <iostream>
-#include <map>
+#include <vector>
 #include <string>
+#include <map>
 using namespace std;
 
-#define int long long
+using ll = long long;
+using pii = pair<int,int>;
 
-signed main(){
-    int t; cin>>t;
-    while(t--){
-        int n; cin>>n;
-        string x; cin>>x;
-        int arr[100005], prefix[100005];
-        for(int i=1; i<=n; i++){
-            arr[i] = x[i-1]-'0';
-        }
+void solve(){
+    int n; string s; cin>>n>>s;
+    vector<int> prefix(n+1, 0);
+    for(int i=1; i<=n; i++) prefix[i] = s[i-1]-'0';
 
-        prefix[0] = 0;
-        for(int i=0; i<=n; i++){
-            prefix[i] = prefix[i-1]+arr[i];
-        }
+    for(int i=1; i<=n; i++) prefix[i]+=prefix[i-1];
 
-        map<int, int> val; //value, count
-        val[0] = 1;
-        for(int i=1; i<=n; i++){
-            val[prefix[i]-i]++;
-        }
+    map<int, ll> m;
+    for(int i=0; i<=n; i++) m[prefix[i]-i]++;
 
-        int ans = 0;
-
-        for(auto p: val){
-            //cout<<p.first<<" "<<p.second<<endl;
-            ans += (p.second*(p.second-1))/2;
-        }   
-
-        cout<<ans<<endl;
+    ll ans = 0;
+    for(auto elem: m){
+        if(elem.second>0) ans+=((elem.second)*(elem.second-1))/2;
     }
+    cout<<ans<<endl;
+}
+
+int main(){
+    int tc; cin>>tc;
+    while(tc--) solve();
+    return 0;
 }
