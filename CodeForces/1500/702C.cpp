@@ -1,36 +1,29 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include <algorithm>
 using namespace std;
+using ll = long long;
 
-int main() {
-  int n,m;
-  cin>>n>>m;
-  vector<int> cities;
-  for(int i=0; i<n; i++){
-    int x;
-    cin>>x;
-    cities.push_back(x);
-  }
-  sort(cities.begin(), cities.end());
-  set<int> towers;
-  for(int i=0; i<m; i++){
-    int x;
-    cin>>x;
-    towers.insert(x);
-  }
-  int minR = 0;
-  for(int i=0; i<n; i++){
-    auto it = towers.lower_bound(cities[i]);
-    int r;
-    if(cities[i]<*towers.begin()){
-      r = abs(*towers.begin()-cities[i]);
+int main(){
+  ll n, m; cin>>n>>m;
+  vector<ll> cities(n), towers(m);
+  for(ll i=0; i<n; i++) cin>>cities[i];
+  for(ll i=0; i<m; i++) cin>>towers[i];
+  towers.push_back(1e18);
+  sort(begin(towers), end(towers)); sort(begin(cities), end(cities));
+
+  ll r = 0;
+
+  ll tIndex = 0, cIndex=0;
+
+  for(;cIndex<n; cIndex++){
+    while(tIndex<m){
+      if(abs(towers[tIndex]-cities[cIndex]) >= abs(towers[tIndex+1]-cities[cIndex]) && tIndex < m){
+        tIndex++;
+      } else break;
     }
-    else if(it==towers.end()){
-      r = abs(cities[i]-*towers.rbegin());
-    }
-    else{
-      r = min(abs(cities[i]-*it),abs(cities[i]-*prev(it)));
-    }
-    minR = max(r, minR);
+    r = max(abs(towers[tIndex]-cities[cIndex]), r);
   }
-  cout<<minR;
+  cout<<r;
+  return 0;
 }
