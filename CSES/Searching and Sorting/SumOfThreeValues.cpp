@@ -1,52 +1,45 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+#define f first
+#define s second
+
+int n, x;
+vector<pair<int,int>> a; //val, pos
+
 int main() {
-  int n,x;
   cin>>n>>x;
-  int arr[n];
-  int sorted[n];
   for(int i=0; i<n; i++){
-    cin>>arr[i];
-    sorted[i] = arr[i];
+    int ai; cin>>ai;
+    a.push_back({ai, i});
   }
-  sort(sorted, sorted+n);
-  bool isPossible = false;
-  int left=0, right=n-1, iVal;
+  sort(begin(a), end(a));
+
+  bool possible = false;
+  tuple<int,int,int> ans;
+
   for(int i=0; i<n; i++){
-    left = 0, right = n-1;
-    while(left<right){
-      if(left!=i&&right!=i&&sorted[left]+sorted[right]==x-sorted[i]){
-        iVal = i;
-        i=n;
-        isPossible = true;
+    if(possible) break;
+    int left = 0, right = n-1;
+    while(left!=right){
+      int tempSum = a[left].f+a[right].f+a[i].f;
+      if(left!=i && right!=i && tempSum==x){
+        possible = true;
+        ans = {a[left].s, a[right].s, a[i].s};
         break;
       }
-      else if(sorted[left]+sorted[right]<x-sorted[i]) left++;
+      else if(tempSum<x){
+        left++;
+      }
       else right--;
     }
   }
-  if(!isPossible) cout<<"IMPOSSIBLE";
-  else{
-    int leftVal, rightVal, iAns;
-    for(int i=0; i<n; i++){
-      if(sorted[iVal]==arr[i]){
-        iAns = i+1;
-        break;
-      }
-    }
-    for(int i=0; i<n; i++){
-      if(i+1!=iAns&&sorted[left] == arr[i]){
-        leftVal = i+1;
-        break;
-      }
-    }
-    for(int i=0; i<n; i++){
-      if(i+1!=iAns&&sorted[right]==arr[i]&&i+1!=leftVal){
-        rightVal = i+1;
-        break;
-      }
-    }
-    cout<<leftVal<<" "<<rightVal<<" "<<iAns;
+
+  if(possible){
+    cout<<get<0>(ans)+1<<" ";
+    cout<<get<1>(ans)+1<<" ";
+    cout<<get<2>(ans)+1<<endl;
+  } else{
+    cout<<"IMPOSSIBLE";
   }
-}
+} 
