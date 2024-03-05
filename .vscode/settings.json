@@ -15,7 +15,8 @@
     "stack": "cpp",
     "cmath": "cpp",
     "cstdlib": "cpp",
-    "istream": "cpp"
+    "istream": "cpp",
+    "*.tcc": "cpp"
   },
   "cSpell.ignoreWords": ["pslopes", "psum", "qslopes"]
 }
